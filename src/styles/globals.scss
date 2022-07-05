@@ -4,4 +4,71 @@
   padding: 0;
 }
 
-// TODO
+/*----------------------------Variaveis-------------------------*/
+:root {
+  // Colors
+  --pink: #ff57b2;
+  --white: #f8f8f8;
+  --bg: #1a1d23;
+  --info: #bbbbbb;
+  --body: #d7d7d7;
+}
+html {
+  scroll-behavior: smooth;
+}
+/*----------------------------Media----------------------------*/
+@media (max-width: 1080px) {
+  html {
+    font-size: 93.75%;
+  }
+}
+@media (max-width: 720px) {
+  html {
+    font-size: 87.5%;
+  }
+}
+/*-------------------------------------------------------------*/
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  font-weight: 400;
+  vertical-align: baseline;
+  line-height: 26px;
+  color: var(--body);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+p {
+  margin: 0 0 26px;
+  line-height: 22px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Inter', sans-serif;
+  color: var(--white);
+  margin: 0 0 26px;
+  line-height: 1.2;
+}
+input,
+textarea,
+select,
+button {
+  font: 400, 1rem 'Inter', sans-serif;
+}
+input[type='button'],
+input[type='submit'] {
+  cursor: pointer;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: var(--pink);
+  text-decoration: none;
+}

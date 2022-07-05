@@ -1,0 +1,25 @@
+.card {
+  border-top: 1px solid var(--info);
+  padding: 1rem 0rem 3rem;
+
+  h2 {
+    font-weight: 700;
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+    transition: all ease 0.2s;
+    cursor: pointer;
+    &:hover {
+      color: var(--pink);
+    }
+  }
+  p {
+    color: var(--body);
+  }
+  section {
+    display: flex;
+    color: var(--info);
+    span {
+      margin: 0 1.5rem 0 0.5rem;
+    }
+  }
+}

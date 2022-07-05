@@ -1,1 +1,14 @@
-// TODO
+.responsiveContainer {
+  display: flex;
+  justify-content: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  > div {
+    width: 100%;
+    max-width: 720px;
+    @media screen and (max-width: 767px) {
+      max-width: 540px;
+    }
+  }
+}

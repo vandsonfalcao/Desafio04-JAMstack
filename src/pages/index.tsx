@@ -1,4 +1,7 @@
+import { useState } from 'react';
 import { GetStaticProps } from 'next';
+import { format } from 'date-fns';
+import ptBR from 'date-fns/locale/pt-BR';
 import Link from 'next/link';
 import Head from 'next/head';
 
@@ -31,7 +34,10 @@ interface HomeProps {
 }
 
 export default function Home({ postsPagination }: HomeProps): JSX.Element {
-  const { results } = postsPagination;
+  const { results, next_page } = postsPagination;
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [nextLink, setNextLink] = useState(next_page);
+
   return (
     <>
       <Head>
@@ -43,14 +49,43 @@ export default function Home({ postsPagination }: HomeProps): JSX.Element {
           {results.map(post => (
             <PostPreview key={post.uid} post={post} />
           ))}
+          {posts.map(post => (
+            <PostPreview key={post.uid} post={post} />
+          ))}
         </div>
       </main>
       <footer
         className={`${commonStyles.responsiveContainer} ${styles.footer}`}
       >
-        <Link href="/">
-          <a>Carregar mais posts</a>
-        </Link>
+        <button
+          type="button"
+          onClick={() => {
+            if (nextLink) {
+              fetch(nextLink)
+                .then(response => response.json())
+                .then((data: PostPagination) => {
+                  data.results.forEach(post => {
+                    setPosts(prev => [
+                      ...prev,
+                      {
+                        ...post,
+                        first_publication_date: format(
+                          new Date(post.first_publication_date),
+                          'dd MMM yyy',
+                          {
+                            locale: ptBR,
+                          }
+                        ),
+                      },
+                    ]);
+                  });
+                  setNextLink(data.next_page);
+                });
+            }
+          }}
+        >
+          {nextLink ? 'Carregar mais posts' : 'Não há mais posts 😞'}
+        </button>
       </footer>
     </>
   );
@@ -59,7 +94,13 @@ export default function Home({ postsPagination }: HomeProps): JSX.Element {
 export const getStaticProps: GetStaticProps = async () => {
   const prismic = getPrismicClient({});
   const postsResponse = await prismic
-    .getByType('posts')
+    .getByType('posts', {
+      pageSize: 3,
+      orderings: {
+        field: 'last_publication_date',
+        direction: 'desc',
+      },
+    })
     .then(res => {
       return res;
     })
@@ -70,13 +111,13 @@ export const getStaticProps: GetStaticProps = async () => {
   const posts: Post[] = postsResponse.results.map((post: Post) => {
     return {
       ...post,
-      first_publication_date: new Date(
-        post.first_publication_date
-      ).toLocaleDateString('pt-BR', {
-        day: '2-digit',
-        month: 'short',
-        year: 'numeric',
-      }),
+      first_publication_date: format(
+        new Date(post.first_publication_date),
+        'dd MMM yyy',
+        {
+          locale: ptBR,
+        }
+      ),
     };
   });
 

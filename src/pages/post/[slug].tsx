@@ -1,7 +1,9 @@
+import { format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 import { GetStaticPaths, GetStaticProps } from 'next';
+import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import { RichText } from 'prismic-dom';
 import { FiCalendar, FiClock, FiUser } from 'react-icons/fi';
 import Header from '../../components/Header';
 
@@ -35,6 +37,9 @@ export default function Post({ post }: PostProps): JSX.Element {
   const { first_publication_date, data } = post;
   return (
     <>
+      <Head>
+        <title>{`${data.title} </> Spacetraveling.`}</title>
+      </Head>
       <Header />
       <main>
         <section className={styles.banner}>
@@ -49,7 +54,7 @@ export default function Post({ post }: PostProps): JSX.Element {
               <FiUser />
               <span>{data.author}</span>
               <FiClock />
-              <span>4 min</span>
+              <span>{data.content.length * 5} min</span>
             </div>
             <section>
               {data.content.map(group => (
@@ -100,13 +105,13 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   const post = {
     ...postResponse,
-    first_publication_date: new Date(
-      postResponse.first_publication_date
-    ).toLocaleDateString('pt-BR', {
-      day: '2-digit',
-      month: 'short',
-      year: 'numeric',
-    }),
+    first_publication_date: format(
+      new Date(postResponse.first_publication_date),
+      'dd MMM yyy',
+      {
+        locale: ptBR,
+      }
+    ),
   };
 
   return {

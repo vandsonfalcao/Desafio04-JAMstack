@@ -2,7 +2,11 @@
   padding: 0 1.5rem;
 }
 .footer {
-  a {
+  margin-bottom: 4rem;
+  button {
+    border: none;
+    color: var(--pink);
+    background: transparent;
     font-weight: 600;
     position: relative;
 

@@ -1,1 +1,62 @@
-// TODO
+.banner {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+  border-top: solid var(--pink) 1px;
+  border-bottom: solid var(--pink) 1px;
+  margin-bottom: 2rem;
+}
+.post {
+  h1 {
+    font-weight: 700;
+    font-size: 3rem;
+    line-height: 58px;
+    margin-bottom: 24px;
+  }
+  > div {
+    span {
+      color: var(--info);
+      margin: 0 1.5rem 0 0.5rem;
+    }
+  }
+  > section {
+    margin-top: 3rem;
+    > div {
+      h2 {
+        font-size: 2rem;
+        &:hover {
+          text-decoration-line: underline;
+          text-decoration-style: dashed;
+          text-decoration-color: var(--pink);
+        }
+      }
+    }
+  }
+}
+
+.footer {
+  margin-bottom: 4rem;
+  a {
+    font-weight: 600;
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      border-radius: 4px;
+      background-color: var(--pink);
+      bottom: 0;
+      left: 0;
+      transform-origin: right;
+      transform: scaleX(0);
+      transition: transform 0.3s ease-in-out;
+    }
+    &:hover::before {
+      transform-origin: left;
+      transform: scaleX(1);
+    }
+  }
+}

@@ -13,7 +13,7 @@ interface PostPreviewProps {
   post: Post;
 }
 export default function PostPreview({ post }: PostPreviewProps): JSX.Element {
-  const { first_publication_date, data, uid } = post;
+  const { last_publication_date, data, uid } = post;
   return (
     <div className={styles.card}>
       <Link href={`/post/${uid}`}>
@@ -25,7 +25,7 @@ export default function PostPreview({ post }: PostPreviewProps): JSX.Element {
       <section>
         <div>
           <FiCalendar />
-          <span>{first_publication_date}</span>
+          <span>{last_publication_date}</span>
         </div>
         <div>
           <FiUser />

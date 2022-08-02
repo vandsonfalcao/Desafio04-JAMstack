@@ -16,7 +16,8 @@ import styles from './home.module.scss';
 
 export interface Post {
   uid?: string;
-  first_publication_date: string | null;
+  first_publication_date: string;
+  last_publication_date: string;
   data: {
     title: string;
     subtitle: string;
@@ -69,9 +70,9 @@ export default function Home({ postsPagination }: HomeProps): JSX.Element {
                       ...prev,
                       {
                         ...post,
-                        first_publication_date: format(
-                          new Date(post.first_publication_date),
-                          'dd MMM yyy',
+                        last_publication_date: format(
+                          new Date(post.last_publication_date),
+                          'dd MMM yyyy',
                           {
                             locale: ptBR,
                           }
@@ -111,9 +112,9 @@ export const getStaticProps: GetStaticProps = async () => {
   const posts: Post[] = postsResponse.results.map((post: Post) => {
     return {
       ...post,
-      first_publication_date: format(
-        new Date(post.first_publication_date),
-        'dd MMM yyy',
+      last_publication_date: format(
+        new Date(post.last_publication_date),
+        'dd MMM yyyy',
         {
           locale: ptBR,
         }
@@ -122,7 +123,7 @@ export const getStaticProps: GetStaticProps = async () => {
   });
 
   const postsPagination: PostPagination = {
-    next_page: postsResponse.next_page,
+    ...postsResponse,
     results: posts,
   };
 
